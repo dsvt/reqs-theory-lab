@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '@components/Layout.astro';
+import { lab } from '@data/lab';
+import { people } from '@data/people';
+---
+<Layout title="People" description={`Researchers and affiliations at ${lab.name}.`}>
+  <section class="page-hero wrap">
+    <p class="kicker">People</p>
+    <h1>Theory is built by people who make the assumptions visible.</h1>
+    <p>Members keep their institutional affiliations and receive explicit credit for their work.</p>
+  </section>
+  <section class:list={["section wrap people-grid", { "people-grid--single": people.length === 1 }]}>
+    {people.map((person, index) => (
+      <article class="person-card">
+        <p class="card-number">0{index + 1}</p>
+        {person.image && person.imageAlt && (
+          <figure class="person-portrait">
+            <Image
+              src={person.image}
+              alt={person.imageAlt}
+              widths={[240, 360, 520]}
+              sizes="(max-width: 760px) 260px, 240px"
+              format="webp"
+              quality={88}
+              loading="eager"
+            />
+          </figure>
+        )}
+        <div class="person-identity">
+          <h2>{person.name}</h2>
+          <p class="person-role">{person.role}</p>
+          {person.affiliation && <p class="person-affiliation">{person.affiliation}</p>}
+        </div>
+        <div class="person-bio">
+          <p>{person.bio}</p>
+          {person.url && <a class="text-link" href={person.url} aria-label={`View ${person.name}'s public profile`}>Khalifa University profile <span aria-hidden="true">↗</span></a>}
+        </div>
+      </article>
+    ))}
+  </section>
+</Layout>

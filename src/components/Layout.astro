@@ -1,0 +1,124 @@
+---
+import { lab } from '@data/lab';
+import { navigation } from '@data/navigation';
+import '@fontsource-variable/ibm-plex-sans/wght.css';
+import '@fontsource-variable/newsreader/wght.css';
+import '@styles/global.css';
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const { title = lab.shortName, description = lab.description } = Astro.props;
+const pageTitle = title === lab.shortName ? lab.name : `${title} | ${lab.shortName}`;
+const canonicalPath = Astro.url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+const canonical = new URL(canonicalPath, lab.canonicalUrl).toString();
+const socialImage = new URL('/og.png', lab.canonicalUrl).toString();
+const themeColor = lab.theme === 'cobalt' ? '#0c1427' : lab.theme === 'amber' ? '#21140b' : lab.theme === 'violet' ? '#191022' : lab.theme === 'coral' ? '#231310' : '#0d1915';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ResearchProject',
+  name: lab.name,
+  alternateName: lab.shortName,
+  url: lab.canonicalUrl,
+  description: lab.description,
+  founder: {
+    '@type': 'Person',
+    name: lab.lead.name,
+    ...(lab.lead.profileUrl ? { url: lab.lead.profileUrl } : {})
+  }
+};
+---
+<!doctype html>
+<html lang="en" data-theme={lab.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {lab.status === 'forming' && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={lab.name} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Theory Lab — Algorithms with guarantees for decisions at scale." />
+    <meta name="theme-color" content={themeColor} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="collective-bar">
+      <div class="wrap collective-bar__inner">
+        <span>{lab.eyebrow}</span>
+        <a href={lab.reqsUrl}>Visit REQS Labs <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <header class="site-header">
+      <nav class="nav wrap" aria-label="Primary navigation">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>{lab.shortName}</span>
+        </a>
+        <div class="nav-links nav-links--desktop">
+          {navigation.map((item) => (
+            <a href={item.href} aria-current={canonicalPath === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))}
+        </div>
+        <details class="nav-menu">
+          <summary><span>Menu</span><span class="nav-menu__icon" aria-hidden="true"></span></summary>
+          <div class="nav-menu__panel">
+            {navigation.map((item) => (
+              <a href={item.href} aria-current={canonicalPath === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </details>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="footer-intro">
+            <a class="footer-brand" href="/">
+              <span class="brand-mark brand-mark--dark" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>{lab.name}</span>
+            </a>
+            <p class="footer-note">
+              A member-led virtual research group. Members retain their independent institutional affiliations.
+            </p>
+          </div>
+          <nav class="footer-links" aria-label="Lab pages">
+            <p>Explore</p>
+            {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+          </nav>
+          <nav class="footer-links" aria-label="Network and external links">
+            <p>Network</p>
+            <a href={lab.reqsUrl}>REQS Labs <span aria-hidden="true">↗</span></a>
+            {lab.repositoryUrl && <a href={lab.repositoryUrl}>Repository <span aria-hidden="true">↗</span></a>}
+            {lab.links.map((link) => <a href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>)}
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <p>{lab.eyebrow}</p>
+          <p>© {new Date().getFullYear()} {lab.shortName}</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

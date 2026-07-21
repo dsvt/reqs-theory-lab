@@ -1,0 +1,36 @@
+---
+import Layout from '@components/Layout.astro';
+import { lab } from '@data/lab';
+import { outputs } from '@data/outputs';
+
+const orderedOutputs = outputs.slice().sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
+---
+<Layout title="Work" description={`Public papers and research artifacts connected to ${lab.name}.`}>
+  <section class="page-hero wrap">
+    <p class="kicker">{lab.work.eyebrow}</p>
+    <h1>{lab.work.headline}</h1>
+    <p>{lab.work.description}</p>
+  </section>
+  <section class="section wrap">
+    {orderedOutputs.length > 0 ? (
+      <ol class="output-list">
+        {orderedOutputs.map((output) => (
+          <li>
+            <div class="output-meta"><span>{output.year}</span><span>{output.type}</span></div>
+            <div>
+              <h2><a href={output.url}>{output.title}</a></h2>
+              <p>{output.authors}</p>
+              <p class="output-venue">{output.venue}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <div class="empty-state">
+        <p class="kicker">No public records yet</p>
+        <h2>Work will appear here after verification.</h2>
+        <p>The absence of placeholders is deliberate. This page should list only records that a reader can inspect.</p>
+      </div>
+    )}
+  </section>
+</Layout>

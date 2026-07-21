@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '@components/Layout.astro';
+import ResearchTrace from '@components/ResearchTrace.astro';
+import { lab, principles } from '@data/lab';
+import { outputs } from '@data/outputs';
+import { people } from '@data/people';
+import { researchThemes } from '@data/research';
+
+const selectedOutputs = outputs.slice().sort((a, b) => b.year - a.year || a.title.localeCompare(b.title)).slice(0, 3);
+const lead = people[0];
+---
+<Layout title={lab.shortName} description={lab.description}>
+  <section class="hero-shell">
+    <div class="hero wrap">
+      <div class="hero-copy">
+        <p class="kicker">{lab.status} · {lab.location}</p>
+        <h1>{lab.statement}</h1>
+        <p class="hero-lead">{lab.description}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/research">Read the research programme</a>
+          <a class="text-link" href="/about">How this lab works <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <ResearchTrace />
+    </div>
+    <aside class="hero-record wrap" aria-label="Lab record">
+      <dl>
+        <div><dt>Lead</dt><dd>{lab.lead.name}</dd></div>
+        <div><dt>Model</dt><dd>Virtual research group</dd></div>
+        <div><dt>Network</dt><dd>REQS Labs</dd></div>
+        <div><dt>Focus</dt><dd>Algorithms and optimization</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <section class="section section-dark">
+    <div class="wrap">
+      <div class="section-heading">
+        <div><p class="kicker">Research</p><h2>Proofs before promises.</h2></div>
+        <a class="text-link text-link-light" href="/research">All research themes <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="theme-grid">
+        {researchThemes.map((theme, index) => (
+          <article class="theme-card">
+            <p class="card-number">0{index + 1}</p>
+            <h3><a href={`/research#${theme.slug}`}>{theme.title}</a></h3>
+            <p>{theme.summary}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap work-preview">
+    <div class="section-heading section-heading--split">
+      <div><p class="kicker">Selected foundations</p><h2>Guarantees readers can inspect.</h2></div>
+      <p>Representative publications by the lab lead and coauthors establish the programme's foundations without being recast as lab outputs.</p>
+    </div>
+    {selectedOutputs.length > 0 ? (
+      <ol class="output-list output-list--preview">
+        {selectedOutputs.map((output) => (
+          <li>
+            <div class="output-meta"><span>{output.year}</span><span>{output.type}</span></div>
+            <div>
+              <h3><a href={output.url}>{output.title}</a></h3>
+              <p>{output.authors}</p>
+              <p class="output-venue">{output.venue}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <div class="work-preview-empty">
+        <div>
+          <p class="index-label">Public record</p>
+          <h3>No verified lab outputs yet.</h3>
+        </div>
+        <p>The empty state is part of the record: proposed work is not presented as completed work.</p>
+        <a class="text-link" href="/work">View the work policy <span aria-hidden="true">→</span></a>
+      </div>
+    )}
+  </section>
+
+  <section class="section method-section">
+    <div class="wrap method-layout">
+      <div class="method-intro">
+        <p class="kicker">Method</p>
+        <h2>Rigour with a useful target</h2>
+        <p>Theory Lab shares REQS standards for evidence and credit while keeping proof, complexity, and optimization at its methodological core.</p>
+      </div>
+      <div class="principle-grid">
+        {principles.map((principle) => (
+          <article class="principle-card">
+            <span>{principle.number}</span>
+            <h3>{principle.title}</h3>
+            <p>{principle.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap lead-band">
+    <div class="lead-band__label"><p class="kicker">Research lead</p><span>01</span></div>
+    {lead?.image && lead.imageAlt && (
+      <figure class="lead-portrait">
+        <Image
+          src={lead.image}
+          alt={lead.imageAlt}
+          widths={[180, 270, 360]}
+          sizes="(max-width: 760px) 180px, 170px"
+          format="webp"
+          quality={88}
+          loading="lazy"
+        />
+      </figure>
+    )}
+    <div class="lead-band__person">
+      <h2>{lab.lead.name}</h2>
+      <p>{lab.lead.role}{lab.lead.affiliation ? ` · ${lab.lead.affiliation}` : ''}</p>
+    </div>
+    <div class="lead-band__action">
+      <p>Research leadership remains connected to public scholarly records, explicit assumptions, and independently stated affiliations.</p>
+      <a class="button button-secondary" href="/people">People and affiliations</a>
+    </div>
+  </section>
+</Layout>

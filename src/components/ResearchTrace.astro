@@ -1,0 +1,41 @@
+---
+import { lab } from '@data/lab';
+---
+
+<aside class="research-trace" aria-label={`${lab.shortName} proof trace`}>
+  <div class="trace-header">
+    <p>{lab.trace.eyebrow}</p>
+    <span>{lab.status}</span>
+  </div>
+
+  <div class="trace-question">
+    <span class="trace-node" aria-hidden="true"></span>
+    <div>
+      <p class="trace-stage">Question</p>
+      <p>{lab.trace.question}</p>
+    </div>
+  </div>
+
+  <ol class="trace-path">
+    {lab.trace.stages.map((stage) => (
+      <li>
+        <span class="trace-node" aria-hidden="true"></span>
+        <div>
+          <p class="trace-stage">{stage.label}</p>
+          <h2>{stage.title}</h2>
+          <p>{stage.detail}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="trace-result">
+    <span class="trace-node" aria-hidden="true"></span>
+    <div>
+      <p class="trace-stage">Public record</p>
+      <p>{lab.trace.result}</p>
+    </div>
+  </div>
+
+  <p class="trace-note">{lab.trace.note}</p>
+</aside>

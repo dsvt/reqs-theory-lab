@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# Review deployment: enable indexing only after theory.reqs.org is approved and mapped.

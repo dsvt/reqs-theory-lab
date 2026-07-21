@@ -1,0 +1,12 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.vercel/
+.vite-cache/
+.DS_Store
+.env
+.env.*
+
+# Raw or private source material never belongs in the repository.
+source-materials/private/

@@ -1,0 +1,34 @@
+---
+import Layout from '@components/Layout.astro';
+import { lab, principles } from '@data/lab';
+---
+<Layout title="About" description={`Purpose and operating model of ${lab.name}.`}>
+  <section class="page-hero wrap">
+    <p class="kicker">About the lab</p>
+    <h1>{lab.name}</h1>
+    <p>{lab.statement}</p>
+  </section>
+  <section class="section wrap about-grid">
+    <div class="prose">
+      {lab.about.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <aside class="fact-panel">
+      <p class="index-label">Operating model</p>
+      <dl>
+        <div><dt>Structure</dt><dd>Member-led virtual lab</dd></div>
+        <div><dt>Collective</dt><dd>REQS Labs</dd></div>
+        <div><dt>Affiliations</dt><dd>Retained by each member</dd></div>
+        <div><dt>Status</dt><dd>{lab.status}</dd></div>
+      </dl>
+    </aside>
+  </section>
+  <section class="section section-dark">
+    <div class="wrap principle-list principle-list-dark">
+      {principles.map((principle) => (
+        <article class="principle-row">
+          <span>{principle.number}</span><h2>{principle.title}</h2><p>{principle.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

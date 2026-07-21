@@ -1,0 +1,24 @@
+---
+import Layout from '@components/Layout.astro';
+import { lab } from '@data/lab';
+import { researchThemes } from '@data/research';
+---
+<Layout title="Research" description={`Research themes and questions at ${lab.name}.`}>
+  <section class="page-hero wrap">
+    <p class="kicker">Research programme</p>
+    <h1>A useful algorithm begins with structure—and ends with a guarantee.</h1>
+    <p>{lab.description}</p>
+  </section>
+  <section class="section wrap research-list">
+    {researchThemes.map((theme, index) => (
+      <article id={theme.slug} class="research-row">
+        <p class="card-number">0{index + 1}</p>
+        <div>
+          <h2>{theme.title}</h2>
+          <p class="research-summary">{theme.summary}</p>
+        </div>
+        <ul>{theme.questions.map((question) => <li>{question}</li>)}</ul>
+      </article>
+    ))}
+  </section>
+</Layout>
