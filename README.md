@@ -2,9 +2,9 @@
 
 Static Astro site for Theory Lab, a member-led virtual lab within REQS Labs.
 
-Preview address: `https://reqs-theory-lab.vercel.app`
+Public address: `https://theory.reqs.org`
 
-Future public address: `https://theory.reqs.org`
+Vercel deployment address: `https://reqs-theory-lab.vercel.app`
 
 Repository: `https://github.com/dsvt/reqs-theory-lab`
 
@@ -28,6 +28,6 @@ pnpm build
 
 The generated `/reqs-lab.json` file gives the central REQS registry a small record to inspect. The hub remains curated through pull requests; it does not ingest member sites automatically.
 
-The preview remains excluded from search indexing until the REQS subdomain and public claims are approved.
+The public site uses the REQS subdomain as its canonical address. Programme status and public indexing are managed independently.
 
 See `docs/onboarding.md` for the full review sequence.
