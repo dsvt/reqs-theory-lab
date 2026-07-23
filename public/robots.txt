@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-# Review deployment: enable indexing only after theory.reqs.org is approved and mapped.
+Sitemap: https://theory.reqs.org/sitemap-index.xml

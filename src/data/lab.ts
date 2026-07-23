@@ -17,11 +17,12 @@ export const lab = {
   slug: 'theory',
   name: 'Theory Lab',
   shortName: 'Theory Lab',
-  canonicalUrl: 'https://reqs-theory-lab.vercel.app',
-  reqsUrl: 'https://reqs.org',
+  canonicalUrl: 'https://theory.reqs.org',
+  reqsUrl: 'https://www.reqs.org',
   repositoryUrl: 'https://github.com/dsvt/reqs-theory-lab',
   theme: 'amber' as LabTheme,
   status: 'forming',
+  indexable: true,
   eyebrow: 'A member lab of REQS Labs',
   statement: 'Algorithms with guarantees for decisions at scale.',
   description:
@@ -42,7 +43,7 @@ export const lab = {
   lead: {
     name: 'Khaled Elbassioni',
     role: 'Lab lead · Professor of Computer Science',
-    affiliation: 'Khalifa University',
+    affiliation: 'Department of Computer Science, Khalifa University, Abu Dhabi, UAE',
     profileUrl: 'https://www.ku.ac.ae/college-people/khaled-elbassioni'
   },
   about: [
