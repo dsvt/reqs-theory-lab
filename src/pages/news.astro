@@ -1,0 +1,42 @@
+---
+import Layout from '@components/Layout.astro';
+import { newsItems } from '@data/news';
+
+const orderedNews = newsItems
+  .slice()
+  .sort((a, b) => b.publishedOn.localeCompare(a.publishedOn));
+---
+<Layout
+  title="News"
+  description="Verified publications, talks, projects, and other developments from Theory Lab."
+>
+  <section class="page-hero wrap">
+    <p class="kicker">Lab news</p>
+    <h1>Research developments from Theory Lab.</h1>
+    <p>Verified publications, talks, projects, and other developments from the lab will be recorded here.</p>
+  </section>
+
+  <section class="section wrap">
+    {orderedNews.length > 0 ? (
+      <ol class="output-list">
+        {orderedNews.map((item) => (
+          <li>
+            <div class="output-meta">
+              <time datetime={item.publishedOn}>{item.publishedOn}</time>
+              <span>{item.category}</span>
+            </div>
+            <div>
+              <h2><a href={`/news/${item.slug}`}>{item.title}</a></h2>
+              <p>{item.summary}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <div class="empty-state">
+        <h2>No Theory Lab announcements yet.</h2>
+        <p>This page will be updated when there is a verified lab development to report.</p>
+      </div>
+    )}
+  </section>
+</Layout>
