@@ -21,7 +21,7 @@ export const lab = {
   reqsUrl: 'https://www.reqs.org',
   repositoryUrl: 'https://github.com/dsvt/reqs-theory-lab',
   theme: 'amber' as LabTheme,
-  status: 'forming',
+  status: 'active',
   indexable: true,
   eyebrow: 'A member lab of REQS Labs',
   statement: 'Algorithms with guarantees for decisions at scale.',
